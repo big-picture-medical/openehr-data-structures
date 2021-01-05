@@ -55,12 +55,6 @@ class TypeableValueCaster extends ValueCaster
          * handle it.
          */
 
-        $casts = [];
-
-        foreach ($values as $value) {
-            $this->castValue($value, $allowedArrayTypes);
-        }
-
-        return $casts;
+        return array_map(fn ($value) => $this->castValue($value, $allowedArrayTypes), $values);
     }
 }
