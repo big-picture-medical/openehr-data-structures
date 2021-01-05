@@ -6,6 +6,6 @@ class Cluster extends Item
 {
     public string $_type = 'CLUSTER';
 
-    /** @var Item[] */
+    /** @var \BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Item[] */
     public array $items;
 }
