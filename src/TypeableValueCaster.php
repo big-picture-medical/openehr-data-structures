@@ -42,7 +42,7 @@ class TypeableValueCaster extends ValueCaster
         try {
             return parent::castValue($value, $allowedTypes);
         } catch (Throwable $e) {
-            throw new \RuntimeException("Unable to cast type [{$value['_type']}] to [" . implode(', ', $allowedTypes) . ']: ' . $e->getMessage());
+            throw new \RuntimeException("Unable to cast type [{$value['_type']}] to [" . implode(', ', $allowedTypes) . ']. Do you need to register a type map? Original error was: ' . $e->getMessage());
         }
     }
 
