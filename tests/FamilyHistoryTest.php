@@ -20,12 +20,10 @@ class FamilyHistoryTest extends TestCase
         $evaluation = new Evaluation($this->payload());
 
         $familyMembers = Collection::make($evaluation->data->items)
-            ->keyBy('archetype_node_id')
-            ->get('at0003');
+            ->firstWhere('archetype_node_id', 'at0003');
 
         $relationshipDegree = Collection::make($familyMembers->items)
-            ->keyBy('archetype_node_id')
-            ->get('at0064');
+            ->firstWhere('archetype_node_id', 'at0064');
 
         $codedText = $relationshipDegree->value;
 
@@ -67,6 +65,8 @@ class FamilyHistoryTest extends TestCase
                 ],
                 'archetype_node_id' => 'at0001',
                 // TODO: can we auto-cast arrays to Collections?
+                // QUESTION: is it a cluster of family members, or do you have
+                // a new cluster for each family member.
                 'items' => [
                     [
                         '_type' => 'CLUSTER',
