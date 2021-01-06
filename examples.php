@@ -6,7 +6,8 @@ use BigPictureMedical\OpenEhr\Rm\Composition\Composition;
 use BigPictureMedical\OpenEhr\Rm\Composition\Content\Entry\Evaluation;
 use BigPictureMedical\OpenEhr\Rm\Composition\Content\Entry\Observation;
 use BigPictureMedical\OpenEhr\Rm\DataStructures\History\PointEvent;
-use BigPictureMedical\OpenEhr\Rm\DataStructures\ItemStructure\ItemList; use BigPictureMedical\OpenEhr\Rm\DataStructures\ItemStructure\ItemTree;
+use BigPictureMedical\OpenEhr\Rm\DataStructures\ItemStructure\ItemList;
+use BigPictureMedical\OpenEhr\Rm\DataStructures\ItemStructure\ItemTree;
 use BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Cluster;
 use BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Element;
 use BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Item;
@@ -20,7 +21,8 @@ use BigPictureMedical\OpenEhr\TypeableValueCaster;
 
 require_once('vendor/autoload.php');
 
-function dd($var) {
+function dd($var)
+{
     var_dump($var);
     die();
 }
