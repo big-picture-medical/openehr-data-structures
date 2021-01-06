@@ -109,6 +109,40 @@ $familyHistory = new Evaluation([
                     [
                         '_type' => 'ELEMENT',
                         'name' => [
+                            'value' => 'Relationship degree',
+                        ],
+                        'archetype_node_id' => 'at0064',
+                        'value' => [
+                            '_type' => 'DV_CODED_TEXT',
+                            'defining_code' => [
+                                'terminology_id' => [
+                                    'value' => 'local',
+                                ],
+                                'code_string' => 'at0066',
+                            ],
+                            'value' => 'Second degree relative'
+                        ],
+                    ],
+                    [
+                        '_type' => 'ELEMENT',
+                        'name' => [
+                            'value' => 'Family line',
+                        ],
+                        'archetype_node_id' => 'at0068',
+                        'value' => [
+                            '_type' => 'DV_CODED_TEXT',
+                            'defining_code' => [
+                                'terminology_id' => [
+                                    'value' => 'local',
+                                ],
+                                'code_string' => 'at0069',
+                            ],
+                            'value' => 'Maternal'
+                        ],
+                    ],
+                    [
+                        '_type' => 'ELEMENT',
+                        'name' => [
                             'value' => 'Date of birth',
                         ],
                         'archetype_node_id' => 'at0005',
