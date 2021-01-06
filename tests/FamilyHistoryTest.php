@@ -2,46 +2,39 @@
 
 namespace Tests;
 
-use BigPictureMedical\OpenEhr\Rm\Common\Generic\PartyIdentified;
-use BigPictureMedical\OpenEhr\Rm\Common\Generic\PartySelf;
-use BigPictureMedical\OpenEhr\Rm\Composition\Composition;
 use BigPictureMedical\OpenEhr\Rm\Composition\Content\Entry\Evaluation;
-use BigPictureMedical\OpenEhr\Rm\Composition\Content\Entry\Observation;
-use BigPictureMedical\OpenEhr\Rm\DataStructures\History\PointEvent;
-use BigPictureMedical\OpenEhr\Rm\DataStructures\ItemStructure\ItemList;
-use BigPictureMedical\OpenEhr\Rm\DataStructures\ItemStructure\ItemTree;
-use BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Cluster;
-use BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Element;
-use BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Item;
-use BigPictureMedical\OpenEhr\Rm\DataTypes\Basic\DvBoolean;
-use BigPictureMedical\OpenEhr\Rm\DataTypes\DateTime\DvDateTime;
-use BigPictureMedical\OpenEhr\Rm\DataTypes\DateTime\DvDuration;
-use BigPictureMedical\OpenEhr\Rm\DataTypes\Quantity\DvQuantity;
-use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
-use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvText;
-use BigPictureMedical\OpenEhr\TypeableValueCaster;
+use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 
 class FamilyHistoryTest extends TestCase
 {
-    public function test_it_can_rehydrate_instance_from_to_array_output(): void
+    public function test_it_can_access_archtype_version(): void
     {
-        TypeableValueCaster::$typeMap['PARTY_IDENTIFIED'] = PartyIdentified::class;
-        TypeableValueCaster::$typeMap['OBSERVATION'] = Observation::class;
-        TypeableValueCaster::$typeMap['POINT_EVENT'] = PointEvent::class;
-        TypeableValueCaster::$typeMap['ITEM_LIST'] = ItemList::class;
-        TypeableValueCaster::$typeMap['ITEM_TREE'] = ItemTree::class;
-        TypeableValueCaster::$typeMap['PARTY_SELF'] = PartySelf::class;
-        TypeableValueCaster::$typeMap['DV_QUANTITY'] = DvQuantity::class;
-        TypeableValueCaster::$typeMap['DV_TEXT'] = DvText::class;
-        TypeableValueCaster::$typeMap['DV_CODED_TEXT'] = DvCodedText::class;
-        TypeableValueCaster::$typeMap['DV_DATE_TIME'] = DvDateTime::class;
-        TypeableValueCaster::$typeMap['DV_BOOLEAN'] = DvBoolean::class;
-        TypeableValueCaster::$typeMap['DV_DURATION'] = DvDuration::class;
-        TypeableValueCaster::$typeMap['CLUSTER'] = Cluster::class;
-        TypeableValueCaster::$typeMap['ELEMENT'] = Element::class;
+        $evaluation = new Evaluation($this->payload());
 
-        $payload = [
+        $this->assertSame('openEHR-EHR-EVALUATION.family_history.v2', $evaluation->archetype_node_id);
+    }
+
+    public function test_it_can_access_relationship_degree(): void
+    {
+        $evaluation = new Evaluation($this->payload());
+
+        $familyMembers = Collection::make($evaluation->data->items)
+            ->keyBy('archetype_node_id')
+            ->get('at0003');
+
+        $relationshipDegree = Collection::make($familyMembers->items)
+            ->keyBy('archetype_node_id')
+            ->get('at0064');
+
+        $codedText = $relationshipDegree->value;
+
+        $this->assertSame('Second degree relative', $codedText->value);
+    }
+
+    private function payload()
+    {
+        return [
             // TODO: wrap this up in "Family history" specific instance
             'archetype_node_id' => 'openEHR-EHR-EVALUATION.family_history.v2',
             'name' => [
@@ -73,6 +66,7 @@ class FamilyHistoryTest extends TestCase
                     'value' => 'data',
                 ],
                 'archetype_node_id' => 'at0001',
+                // TODO: can we auto-cast arrays to Collections?
                 'items' => [
                     [
                         '_type' => 'CLUSTER',
@@ -238,9 +232,5 @@ class FamilyHistoryTest extends TestCase
                 ],
             ],
         ];
-        $evaluation = new Evaluation($payload);
-
-        $this->assertSame('openEHR-EHR-EVALUATION.family_history.v2', $evaluation->archetype_node_id);
-        $this->assertInstanceOf('stdClass', $evaluation->data->items);
     }
 }
