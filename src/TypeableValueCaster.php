@@ -57,4 +57,11 @@ class TypeableValueCaster extends ValueCaster
 
         return array_map(fn ($value) => $this->castValue($value, $allowedArrayTypes), $values);
     }
+
+    public static function register(string $class): void
+    {
+        $reflection = new \ReflectionClass($class);
+        $type = $reflection->getProperty('_type')->getDefaultValue();
+        static::$typeMap[$type] = $class;
+    }
 }
