@@ -8,14 +8,14 @@ class ObjectVersionId extends UidBasedId
 
     public function object_id(): Uid
     {
-        return new Uid([
+        return new Uuid([
             'value' => explode('::', $this->value)[0]
         ]);
     }
 
     public function creating_system_id(): Uid
     {
-        return new Uid([
+        return new InternetId([
             'value' => explode('::', $this->value)[1]
         ]);
     }
