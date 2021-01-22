@@ -2,7 +2,9 @@
 
 namespace BigPictureMedical\OpenEhr\Base\BaseTypes\Identification;
 
-class ObjectRef
+use BigPictureMedical\OpenEhr\TypeableDataTransferObject;
+
+class ObjectRef extends TypeableDataTransferObject
 {
     public string $_type = 'OBJECT_REF';
 
