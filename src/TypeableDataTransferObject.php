@@ -11,4 +11,9 @@ abstract class TypeableDataTransferObject extends DataTransferObject
     {
         return new TypeableValueCaster();
     }
+
+    public function toArray(): array
+    {
+        return Helpers::recursivelyRemoveNulls(parent::toArray());
+    }
 }
