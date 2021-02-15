@@ -8,6 +8,8 @@ use BigPictureMedical\OpenEhr\Rm\DataTypes\Uri\DvEhrUri;
 
 class Attenstation extends AuditDetails
 {
+    public string $_type = 'ATTENSTATION';
+
     public ?DvMultimedia $attested_view;
 
     public ?string $proof;
