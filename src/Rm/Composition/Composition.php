@@ -6,6 +6,8 @@ use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\CodePhrase;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
 use BigPictureMedical\OpenEhr\Rm\Common\Archetyped\Locatable;
 use BigPictureMedical\OpenEhr\Rm\Common\Generic\PartyProxy;
+use BigPictureMedical\OpenEhr\Rm\Composition\Content\ContentItem;
+use Illuminate\Support\Collection;
 
 class Composition extends Locatable
 {
@@ -23,4 +25,14 @@ class Composition extends Locatable
 
     /** @var \BigPictureMedical\OpenEhr\Rm\Composition\Content\ContentItem[] */
     public $content;
+
+    public function firstEntry(string $archetypeNodeId): ContentItem
+    {
+        return collect($this->content)->firstWhere('archetype_node_id', $archetypeNodeId);
+    }
+
+    public function entries(string $archetypeNodeId): Collection
+    {
+        return collect($this->items)->where('archetype_node_id', $archetypeNodeId)->values();
+    }
 }
