@@ -33,6 +33,6 @@ class Composition extends Locatable
 
     public function entries(string $archetypeNodeId): Collection
     {
-        return collect($this->items)->where('archetype_node_id', $archetypeNodeId)->values();
+        return collect($this->content)->where('archetype_node_id', $archetypeNodeId)->values();
     }
 }
