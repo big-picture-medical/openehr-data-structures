@@ -1,5 +1,5 @@
 {
-    "name": "big-picture-medical/openehr",
+    "name": "big-picture-medical/openehr-data-structures",
     "require": {
         "spatie/data-transfer-object": "^2.6",
         "symfony/finder": "^5.2",
