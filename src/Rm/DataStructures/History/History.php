@@ -6,6 +6,8 @@ use BigPictureMedical\OpenEhr\Rm\DataStructures\DataStructure;
 use BigPictureMedical\OpenEhr\Rm\DataStructures\ItemStructure\ItemStructure;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\DateTime\DvDateTime;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\DateTime\DvDuration;
+use BigPictureMedical\OpenEhr\TypeableArrayCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 
 class History extends DataStructure
 {
@@ -19,6 +21,7 @@ class History extends DataStructure
 
     public ?ItemStructure $summary;
 
-    /** @var \BigPictureMedical\OpenEhr\Rm\DataStructures\History\Event[] */
+    /** @var Event[] */
+    #[CastWith(TypeableArrayCaster::class, itemType: Event::class)]
     public array $events;
 }

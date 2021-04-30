@@ -2,13 +2,16 @@
 
 namespace BigPictureMedical\OpenEhr\Rm\DataStructures\Representation;
 
+use BigPictureMedical\OpenEhr\TypeableArrayCaster;
 use Illuminate\Support\Collection;
+use Spatie\DataTransferObject\Attributes\CastWith;
 
 class Cluster extends Item
 {
     public string $_type = 'CLUSTER';
 
-    /** @var \BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Item[] */
+    /** @var Item[] */
+    #[CastWith(TypeableArrayCaster::class, itemType: Item::class)]
     public array $items;
 
     public function find(string $archetypeNodeId): ?Item

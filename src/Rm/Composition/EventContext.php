@@ -4,9 +4,12 @@ namespace BigPictureMedical\OpenEhr\Rm\Composition;
 
 use BigPictureMedical\OpenEhr\Rm\DataStructures\ItemStructure\ItemStructure;
 use BigPictureMedical\OpenEhr\Rm\Common\Archetyped\Pathable;
+use BigPictureMedical\OpenEhr\Rm\Common\Generic\Participation;
 use BigPictureMedical\OpenEhr\Rm\Common\Generic\PartyIdentified;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\DateTime\DvDateTime;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
+use BigPictureMedical\OpenEhr\TypeableArrayCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 
 class EventContext extends Pathable
 {
@@ -24,6 +27,7 @@ class EventContext extends Pathable
 
     public ?PartyIdentified $health_care_facility;
 
-    /** @var ?\BigPictureMedical\OpenEhr\Rm\Common\Generic\Participation[] */
+    /** @var ?Participation[] */
+    #[CastWith(TypeableArrayCaster::class, itemType: Participation::class)]
     public ?array $participations;
 }
