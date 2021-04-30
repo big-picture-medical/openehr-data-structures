@@ -2,21 +2,22 @@
 
 namespace BigPictureMedical\OpenEhr;
 
-use Spatie\DataTransferObject\ValueCaster;
+use Spatie\DataTransferObject\Casters\DataTransferObjectCaster;
+use Spatie\DataTransferObject\DataTransferObject;
 use Throwable;
 
-class TypeableValueCaster extends ValueCaster
+class TypeableDataTransferObjectCaster extends DataTransferObjectCaster
 {
     public static $typeMap;
 
-    public function castValue($value, array $allowedTypes)
+    public function cast(mixed $value): DataTransferObject
     {
         /*
          * The _type isn't mandatory - we just defer to the parents logic when
          * it's not provided.
          */
         if (empty($value['_type'])) {
-            return parent::castValue($value, $allowedTypes);
+            return parent::cast($value);
         }
 
         /*
@@ -40,22 +41,10 @@ class TypeableValueCaster extends ValueCaster
          * We'll return a more descriptive error calling out the _type that was attempted
          */
         try {
-            return parent::castValue($value, $allowedTypes);
+            return parent::cast($value);
         } catch (Throwable $e) {
-            throw new \RuntimeException("Unable to cast type [{$value['_type']}] to [" . implode(', ', $allowedTypes) . ']. Do you need to register a type map? Original error was: ' . $e->getMessage());
+            throw new \RuntimeException("Unable to cast type [{$value['_type']}]. Do you need to register a type map? Original error was: " . $e->getMessage());
         }
-    }
-
-    public function castCollection($values, array $allowedArrayTypes)
-    {
-        /*
-         * The parent method attempts to new up the DTO class directly, which
-         * fails for our abstract classes that rely on the _type to determine
-         * the concrete class. It's easiest to just let our castValue() logic
-         * handle it.
-         */
-
-        return array_map(fn ($value) => $this->castValue($value, $allowedArrayTypes), $values);
     }
 
     public static function map(string $type, string $class): void
