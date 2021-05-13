@@ -2,16 +2,12 @@
 
 namespace BigPictureMedical\OpenEhr;
 
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\DataTransferObject;
-use Spatie\DataTransferObject\ValueCaster;
 
+#[CastWith(TypeableDataTransferObjectCaster::class)]
 abstract class TypeableDataTransferObject extends DataTransferObject
 {
-    protected function getValueCaster(): ValueCaster
-    {
-        return new TypeableValueCaster();
-    }
-
     public function toArray(): array
     {
         return Helpers::recursivelyRemoveNulls(parent::toArray());

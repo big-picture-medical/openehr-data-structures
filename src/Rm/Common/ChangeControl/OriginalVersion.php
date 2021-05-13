@@ -3,9 +3,10 @@
 namespace BigPictureMedical\OpenEhr\Rm\Common\ChangeControl;
 
 use BigPictureMedical\OpenEhr\Base\BaseTypes\Identification\ObjectVersionId;
-use BigPictureMedical\OpenEhr\Rm\Common\Generic\Attenstation;
+use BigPictureMedical\OpenEhr\Rm\Common\Generic\Attestation;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
-use phpDocumentor\Reflection\DocBlock\Tag;
+use BigPictureMedical\OpenEhr\TypeableArrayCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 
 /**
  * @template T
@@ -19,15 +20,17 @@ class OriginalVersion extends Version
     public ?ObjectVersionId $preceding_version_uid;
 
     /**
-     * @var ?\BigPictureMedical\OpenEhr\Base\BaseTypes\Identification\ObjectVersionId[]
+     * @var ?ObjectVersionId[]
      */
+    #[CastWith(TypeableArrayCaster::class, itemType: ObjectVersionId::class)]
     public ?array $other_input_version_uids;
 
     public DvCodedText $lifecycle_state;
 
     /**
-     * @var ?Attenstation[]
+     * @var ?Attestation[]
      */
+    #[CastWith(TypeableArrayCaster::class, itemType: Attestation::class)]
     public ?array $attestations;
 
     /**
