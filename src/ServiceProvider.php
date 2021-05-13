@@ -21,7 +21,7 @@ use BigPictureMedical\OpenEhr\Rm\DataTypes\Quantity\DvCount;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Quantity\DvQuantity;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvText;
-use BigPictureMedical\OpenEhr\TypeableValueCaster;
+use BigPictureMedical\OpenEhr\TypeableDataTransferObjectCaster;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider
@@ -39,24 +39,24 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot(): void
     {
-        TypeableValueCaster::map('CLUSTER', Cluster::class);
-        TypeableValueCaster::map('DV_BOOLEAN', DvBoolean::class);
-        TypeableValueCaster::map('DV_CODED_TEXT', DvCodedText::class);
-        TypeableValueCaster::map('DV_COUNT', DvCount::class);
-        TypeableValueCaster::map('DV_DATE', DvDate::class);
-        TypeableValueCaster::map('DV_DATE_TIME', DvDateTime::class);
-        TypeableValueCaster::map('DV_DURATION', DvDuration::class);
-        TypeableValueCaster::map('DV_QUANTITY', DvQuantity::class);
-        TypeableValueCaster::map('DV_TEXT', DvText::class);
-        TypeableValueCaster::map('ELEMENT', Element::class);
-        TypeableValueCaster::map('EVALUATION', Evaluation::class);
-        TypeableValueCaster::map('OBJECT_VERSION_ID', ObjectVersionId::class);
-        TypeableValueCaster::map('GENERIC_ID', GenericId::class);
-        TypeableValueCaster::map('ITEM_LIST', ItemList::class);
-        TypeableValueCaster::map('ITEM_TREE', ItemTree::class);
-        TypeableValueCaster::map('OBSERVATION', Observation::class);
-        TypeableValueCaster::map('PARTY_IDENTIFIED', PartyIdentified::class);
-        TypeableValueCaster::map('PARTY_SELF', PartySelf::class);
-        TypeableValueCaster::map('POINT_EVENT', PointEvent::class);
+        TypeableDataTransferObjectCaster::map('CLUSTER', Cluster::class);
+        TypeableDataTransferObjectCaster::map('DV_BOOLEAN', DvBoolean::class);
+        TypeableDataTransferObjectCaster::map('DV_CODED_TEXT', DvCodedText::class);
+        TypeableDataTransferObjectCaster::map('DV_COUNT', DvCount::class);
+        TypeableDataTransferObjectCaster::map('DV_DATE', DvDate::class);
+        TypeableDataTransferObjectCaster::map('DV_DATE_TIME', DvDateTime::class);
+        TypeableDataTransferObjectCaster::map('DV_DURATION', DvDuration::class);
+        TypeableDataTransferObjectCaster::map('DV_QUANTITY', DvQuantity::class);
+        TypeableDataTransferObjectCaster::map('DV_TEXT', DvText::class);
+        TypeableDataTransferObjectCaster::map('ELEMENT', Element::class);
+        TypeableDataTransferObjectCaster::map('EVALUATION', Evaluation::class);
+        TypeableDataTransferObjectCaster::map('OBJECT_VERSION_ID', ObjectVersionId::class);
+        TypeableDataTransferObjectCaster::map('GENERIC_ID', GenericId::class);
+        TypeableDataTransferObjectCaster::map('ITEM_LIST', ItemList::class);
+        TypeableDataTransferObjectCaster::map('ITEM_TREE', ItemTree::class);
+        TypeableDataTransferObjectCaster::map('OBSERVATION', Observation::class);
+        TypeableDataTransferObjectCaster::map('PARTY_IDENTIFIED', PartyIdentified::class);
+        TypeableDataTransferObjectCaster::map('PARTY_SELF', PartySelf::class);
+        TypeableDataTransferObjectCaster::map('POINT_EVENT', PointEvent::class);
     }
 }
