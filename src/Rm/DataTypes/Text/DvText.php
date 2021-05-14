@@ -3,6 +3,8 @@
 namespace BigPictureMedical\OpenEhr\Rm\DataTypes\Text;
 
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Basic\DataValue;
+use BigPictureMedical\OpenEhr\TypeableArrayCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 
 class DvText extends DataValue
 {
@@ -13,7 +15,8 @@ class DvText extends DataValue
     public ?string $formatting;
 
     /** @var ?TermMapping[] */
-    public $mappings;
+    #[CastWith(TypeableArrayCaster::class, itemType: TermMapping::class)]
+    public ?array $mappings;
 
     public ?CodePhrase $language;
 }

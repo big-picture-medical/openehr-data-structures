@@ -7,6 +7,8 @@ use BigPictureMedical\OpenEhr\Rm\Common\Generic\Participation;
 use BigPictureMedical\OpenEhr\Rm\Common\Generic\PartyProxy;
 use BigPictureMedical\OpenEhr\Rm\Composition\Content\ContentItem;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\CodePhrase;
+use BigPictureMedical\OpenEhr\TypeableArrayCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 
 abstract class Entry extends ContentItem
 {
@@ -17,7 +19,8 @@ abstract class Entry extends ContentItem
     public CodePhrase $encoding;
 
     /** @var ?Participation[] */
-    public $other_participations;
+    #[CastWith(TypeableArrayCaster::class, itemType: Participation::class)]
+    public ?array $other_participations;
 
     public ?ObjectRef $workflow_id;
 

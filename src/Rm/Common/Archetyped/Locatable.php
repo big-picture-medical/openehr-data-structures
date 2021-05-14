@@ -4,6 +4,8 @@ namespace BigPictureMedical\OpenEhr\Rm\Common\Archetyped;
 
 use BigPictureMedical\OpenEhr\Base\BaseTypes\Identification\UidBasedId;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvText;
+use BigPictureMedical\OpenEhr\TypeableArrayCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 
 abstract class Locatable extends Pathable
 {
@@ -15,8 +17,9 @@ abstract class Locatable extends Pathable
 
     public ?UidBasedId $uid;
 
-    /** ?Link[] */
-    public $links;
+    /** @var ?Link[] */
+    #[CastWith(TypeableArrayCaster::class, itemType: Link::class)]
+    public ?array $links;
 
     public ?Archetyped $archetype_details;
 
