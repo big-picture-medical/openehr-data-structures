@@ -7,7 +7,9 @@ use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
 use BigPictureMedical\OpenEhr\Rm\Common\Archetyped\Locatable;
 use BigPictureMedical\OpenEhr\Rm\Common\Generic\PartyProxy;
 use BigPictureMedical\OpenEhr\Rm\Composition\Content\ContentItem;
+use BigPictureMedical\OpenEhr\TypeableArrayCaster;
 use Illuminate\Support\Collection;
+use Spatie\DataTransferObject\Attributes\CastWith;
 
 class Composition extends Locatable
 {
@@ -23,8 +25,9 @@ class Composition extends Locatable
 
     public PartyProxy $composer;
 
-    /** @var \BigPictureMedical\OpenEhr\Rm\Composition\Content\ContentItem[] */
-    public $content;
+    /** @var ContentItem[] */
+    #[CastWith(TypeableArrayCaster::class, itemType: ContentItem::class)]
+    public array $content;
 
     public function firstEntry(string $archetypeNodeId): ContentItem
     {
