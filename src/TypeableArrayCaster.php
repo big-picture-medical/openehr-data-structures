@@ -4,6 +4,7 @@ namespace BigPictureMedical\OpenEhr;
 
 use RuntimeException;
 use Spatie\DataTransferObject\Caster;
+use TypeError;
 
 class TypeableArrayCaster implements Caster
 {
@@ -21,9 +22,15 @@ class TypeableArrayCaster implements Caster
 
         $caster = new TypeableDataTransferObjectCaster($this->itemType);
 
-        return array_map(
-            fn (array $item) => $caster->cast($item),
-            $value
-        );
+        return array_map(fn ($item) => $this->validate($caster->cast($item)), $value);
+    }
+
+    protected function validate(mixed $value): mixed
+    {
+        if (! $value instanceof $this->itemType) {
+            throw new TypeError("Expected instance of $this->itemType, got " . get_class($value));
+        }
+
+        return $value;
     }
 }
