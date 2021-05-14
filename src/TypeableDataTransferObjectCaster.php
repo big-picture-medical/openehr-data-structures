@@ -16,7 +16,7 @@ class TypeableDataTransferObjectCaster extends DataTransferObjectCaster
          * The _type isn't mandatory - we just defer to the parents logic when
          * it's not provided.
          */
-        if (empty($value['_type'])) {
+        if (! is_array($value) || empty($value['_type'])) {
             return parent::cast($value);
         }
 
