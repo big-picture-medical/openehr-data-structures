@@ -2,9 +2,14 @@
 
 namespace BigPictureMedical\OpenEhr\Base\BaseTypes\Identification;
 
+use BigPictureMedical\OpenEhr\Validators\ValidObjectVersionId;
+
 class ObjectVersionId extends UidBasedId
 {
     public string $_type = 'OBJECT_VERSION_ID';
+
+    #[ValidObjectVersionId()]
+    public string $value;
 
     public function object_id(): Uid
     {
