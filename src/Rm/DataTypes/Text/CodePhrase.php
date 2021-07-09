@@ -14,4 +14,12 @@ class CodePhrase extends Any
     public string $code_string;
 
     public ?string $preferred_term;
+
+    public static function make(string $codeString, string $terminologyId): self
+    {
+        return new self(
+            code_string: $codeString,
+            terminology_id: TerminologyId::make($terminologyId),
+        );
+    }
 }
