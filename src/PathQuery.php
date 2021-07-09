@@ -2,13 +2,14 @@
 
 namespace BigPictureMedical\OpenEhr;
 
+use BigPictureMedical\OpenEhr\Rm\Common\Archetyped\Pathable;
 use Illuminate\Support\Collection;
 
 class PathQuery
 {
-    public function __construct(protected $query) {}
+    public function __construct(protected string $query) {}
 
-    public function find(object $root)
+    public function find(Pathable $root): mixed
     {
         $item = $root;
 
@@ -24,7 +25,7 @@ class PathQuery
         return $item;
     }
 
-    public function findList(object $root)
+    public function findList(Pathable $root): array
     {
         $items = collect([$root]);
 
