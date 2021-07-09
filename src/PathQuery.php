@@ -31,10 +31,13 @@ class PathQuery
 
         foreach ($this->segments() as $segment) {
             $items = $items
-                ->map(fn ($item) => $item->{$segment['attribute_name']})->flatten()
+                ->map(fn ($item) => $item->{$segment['attribute_name']})
+                ->flatten()
                 ->when(
                     isset($segment['expression']),
-                    fn ($items) => $items->filter(fn ($item) => $item->archetype_node_id === $segment['expression'])
+                    fn ($items) => $items
+                        ->filter(fn ($item) => $item->archetype_node_id === $segment['expression'])
+                        ->values()
                 );
         }
 

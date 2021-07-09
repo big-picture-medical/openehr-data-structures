@@ -27,6 +27,17 @@ class PathQueryTest extends TestCase
         $this->assertSame('Test value 1', $result);
     }
 
+    public function test_it_handles_missing_paths_when_finding_a_single_item()
+    {
+        $composition = $this->makeComposition();
+
+        $query = 'content[missing]/data/items[at0002]/items[at0003]/value/value';
+
+        $result = (new PathQuery($query))->find($composition);
+
+        $this->assertSame(null, $result);
+    }
+
     public function test_it_finds_a_list()
     {
         $composition = $this->makeComposition();
@@ -41,6 +52,17 @@ class PathQueryTest extends TestCase
             'Test value 3',
             'Test value 4',
         ], $result);
+    }
+
+    public function test_it_handles_missing_paths_when_finding_a_list()
+    {
+        $composition = $this->makeComposition();
+
+        $query = 'content[missing]/data/items[at0002]/items[at0003]/value/value';
+
+        $result = (new PathQuery($query))->findList($composition);
+
+        $this->assertSame([], $result);
     }
 
     private function makeComposition(): Composition
