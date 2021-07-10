@@ -20,9 +20,8 @@ class PathQueryTest extends TestCase
     {
         $composition = $this->makeComposition();
 
-        $query = 'content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value';
-
-        $result = (new PathQuery($query))->find($composition);
+        $result = (new PathQuery('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'))
+            ->find($composition);
 
         $this->assertSame('Test value 1', $result);
     }
@@ -31,10 +30,16 @@ class PathQueryTest extends TestCase
     {
         $composition = $this->makeComposition();
 
-        $query = 'content[missing]/data/items[at0002]/items[at0003]/value/value';
+        $result = (new PathQuery('content[missing]/data/items[at0002]/items[at0003]/value/value'))
+            ->find($composition);
+        $this->assertSame(null, $result);
 
-        $result = (new PathQuery($query))->find($composition);
+        $result = (new PathQuery('content[test-EVALUATION.test.v0]/missing/items[at0002]/items[at0003]/value/value'))
+            ->find($composition);
+        $this->assertSame(null, $result);
 
+        $result = (new PathQuery('missing[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'))
+            ->find($composition);
         $this->assertSame(null, $result);
     }
 
@@ -58,10 +63,16 @@ class PathQueryTest extends TestCase
     {
         $composition = $this->makeComposition();
 
-        $query = 'content[missing]/data/items[at0002]/items[at0003]/value/value';
+        $result = (new PathQuery('content[missing]/data/items[at0002]/items[at0003]/value/value'))
+            ->findList($composition);
+        $this->assertSame([], $result);
 
-        $result = (new PathQuery($query))->findList($composition);
+        $result = (new PathQuery('content[test-EVALUATION.test.v0]/missing/items[at0002]/items[at0003]/value/value'))
+            ->findList($composition);
+        $this->assertSame([], $result);
 
+        $result = (new PathQuery('missing[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'))
+            ->findList($composition);
         $this->assertSame([], $result);
     }
 

@@ -11,18 +11,7 @@ class PathQuery
 
     public function find(Pathable $root): mixed
     {
-        $item = $root;
-
-        foreach ($this->segments() as $segment) {
-            if (! isset($segment['expression'])) {
-                $item = $item?->{$segment['attribute_name']};
-                continue;
-            }
-
-            $item = collect($item?->{$segment['attribute_name']})->firstWhere('archetype_node_id', $segment['expression']);
-        }
-
-        return $item;
+        return $this->findList($root)[0] ?? null;
     }
 
     public function findList(Pathable $root): array
@@ -31,12 +20,12 @@ class PathQuery
 
         foreach ($this->segments() as $segment) {
             $items = $items
-                ->map(fn ($item) => $item->{$segment['attribute_name']})
+                ->map(fn ($item) => $item->{$segment['attribute_name']} ?? null)
                 ->flatten()
                 ->when(
                     isset($segment['expression']),
                     fn ($items) => $items
-                        ->filter(fn ($item) => $item->archetype_node_id === $segment['expression'])
+                        ->filter(fn ($item) => ($item?->archetype_node_id ?? null) === $segment['expression'])
                         ->values()
                 );
         }
