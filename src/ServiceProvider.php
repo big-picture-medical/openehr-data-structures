@@ -18,6 +18,7 @@ use BigPictureMedical\OpenEhr\Rm\DataTypes\DateTime\DvDate;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\DateTime\DvDateTime;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\DateTime\DvDuration;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Quantity\DvCount;
+use BigPictureMedical\OpenEhr\Rm\DataTypes\Quantity\DvProportion;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Quantity\DvQuantity;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvText;
@@ -46,6 +47,7 @@ class ServiceProvider extends BaseServiceProvider
         TypeableDataTransferObjectCaster::map('DV_DATE', DvDate::class);
         TypeableDataTransferObjectCaster::map('DV_DATE_TIME', DvDateTime::class);
         TypeableDataTransferObjectCaster::map('DV_DURATION', DvDuration::class);
+        TypeableDataTransferObjectCaster::map('DV_PROPORTION', DvProportion::class);
         TypeableDataTransferObjectCaster::map('DV_QUANTITY', DvQuantity::class);
         TypeableDataTransferObjectCaster::map('DV_TEXT', DvText::class);
         TypeableDataTransferObjectCaster::map('ELEMENT', Element::class);
