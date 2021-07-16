@@ -11,6 +11,10 @@ use BigPictureMedical\OpenEhr\TypeableArrayCaster;
 use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\Attributes\CastWith;
 
+/**
+ * @template TUidType
+ * @extends Locatable<TUidType>
+ */
 class Composition extends Locatable
 {
     public string $_type = 'COMPOSITION';

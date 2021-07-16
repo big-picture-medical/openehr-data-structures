@@ -7,6 +7,9 @@ use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvText;
 use BigPictureMedical\OpenEhr\TypeableArrayCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 
+/**
+ * @template TUidType of UidBasedId
+ */
 abstract class Locatable extends Pathable
 {
     public string $_type = 'LOCATABLE';
@@ -15,6 +18,9 @@ abstract class Locatable extends Pathable
 
     public string $archetype_node_id;
 
+    /**
+     * @var TUidType
+     */
     public ?UidBasedId $uid;
 
     /** @var ?Link[] */
