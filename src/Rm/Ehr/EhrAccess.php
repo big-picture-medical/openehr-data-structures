@@ -8,5 +8,8 @@ class EhrAccess extends Locatable
 {
     public string $_type = 'EHR_ACCESS';
 
-    public ?AccessControlSettings $settings;
+    /**
+     * The access control setting is currently implementation specific.
+     */
+    public ?object $settings;
 }
