@@ -18,4 +18,14 @@ abstract class Pathable extends Any
     {
         return (new PathQuery($path))->findList($this);
     }
+
+    public function pathExists(string $path): bool
+    {
+        return (new PathQuery($path))->exists($this);
+    }
+
+    public function pathUnique(string $path): bool
+    {
+        return (new PathQuery($path))->unique($this);
+    }
 }

@@ -38,6 +38,22 @@ class PathableTest extends TestCase
         ], $result);
     }
 
+    public function test_it_finds_whether_a_path_exists()
+    {
+        $composition = $this->makeComposition();
+
+        $this->assertTrue($composition->pathExists('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'));
+        $this->assertFalse($composition->pathExists('test'));
+    }
+
+    public function test_it_finds_whether_a_path_is_unique()
+    {
+        $composition = $this->makeComposition();
+
+        $this->assertTrue($composition->pathUnique('content[test-EVALUATION.test.v0]/data'));
+        $this->assertFalse($composition->pathUnique('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'));
+    }
+
     private function makeComposition(): Composition
     {
         return new Composition(

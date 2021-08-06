@@ -21,6 +21,7 @@ class PathQuery
         foreach ($this->segments() as $segment) {
             $items = $items
                 ->map(fn ($item) => $item->{$segment['attribute_name']} ?? null)
+                ->filter()
                 ->flatten()
                 ->when(
                     isset($segment['expression']),
@@ -31,6 +32,16 @@ class PathQuery
         }
 
         return $items->toArray();
+    }
+
+    public function exists(Pathable $root): bool
+    {
+        return count($this->findList($root)) > 0;
+    }
+
+    public function unique(Pathable $root): bool
+    {
+        return count($this->findList($root)) === 1;
     }
 
     private function segments(): Collection

@@ -74,6 +74,36 @@ class PathQueryTest extends TestCase
         $result = (new PathQuery('missing[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'))
             ->findList($composition);
         $this->assertSame([], $result);
+
+        $result = (new PathQuery('test'))
+            ->findList($composition);
+        $this->assertSame([], $result);
+    }
+
+    public function test_it_finds_whether_a_path_exists()
+    {
+        $composition = $this->makeComposition();
+
+        $result = (new PathQuery('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'))
+            ->exists($composition);
+        $this->assertTrue($result);
+
+        $result = (new PathQuery('test'))
+            ->exists($composition);
+        $this->assertFalse($result);
+    }
+
+    public function test_it_finds_whether_a_path_is_unique()
+    {
+        $composition = $this->makeComposition();
+
+        $result = (new PathQuery('content[test-EVALUATION.test.v0]/data'))
+            ->unique($composition);
+        $this->assertTrue($result);
+
+        $result = (new PathQuery('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'))
+            ->unique($composition);
+        $this->assertFalse($result);
     }
 
     private function makeComposition(): Composition
