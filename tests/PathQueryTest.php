@@ -13,6 +13,7 @@ use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\CodePhrase;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvText;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 class PathQueryTest extends TestCase
 {
@@ -20,10 +21,21 @@ class PathQueryTest extends TestCase
     {
         $composition = $this->makeComposition();
 
-        $result = (new PathQuery('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'))
+        $result = (new PathQuery('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0004]/value/value'))
             ->find($composition);
 
-        $this->assertSame('Test value 1', $result);
+        $this->assertSame('Test unique value', $result);
+    }
+
+    public function test_it_throws_when_find_has_multiple_results()
+    {
+        $composition = $this->makeComposition();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Found multiple items at path. Found 4, expected 1.');
+
+        (new PathQuery('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'))
+            ->find($composition);
     }
 
     public function test_it_handles_missing_paths_when_finding_a_single_item()
@@ -140,6 +152,11 @@ class PathQueryTest extends TestCase
                                         archetype_node_id: 'at0003',
                                         name: new DvText(value: 'Test element'),
                                         value: new DvText(value: 'Test value 2')
+                                    ),
+                                    new Element(
+                                        archetype_node_id: 'at0004',
+                                        name: new DvText(value: 'Test element'),
+                                        value: new DvText(value: 'Test unique value')
                                     ),
                                 ]
                             ),

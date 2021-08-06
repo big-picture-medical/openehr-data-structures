@@ -4,6 +4,7 @@ namespace BigPictureMedical\OpenEhr;
 
 use BigPictureMedical\OpenEhr\Rm\Common\Archetyped\Pathable;
 use Illuminate\Support\Collection;
+use RuntimeException;
 
 class PathQuery
 {
@@ -11,7 +12,13 @@ class PathQuery
 
     public function find(Pathable $root): mixed
     {
-        return $this->findList($root)[0] ?? null;
+        $items = $this->findList($root);
+
+        if (count($items) > 1) {
+            throw new RuntimeException('Found multiple items at path. Found '.count($items).', expected 1.');
+        }
+
+        return $items[0] ?? null;
     }
 
     public function findList(Pathable $root): array
@@ -50,11 +57,11 @@ class PathQuery
             $attributePattern = '(?<attribute_name>\w+)';
             $predicatePattern = '(?<predicate>\[(?<expression>[\w.-]+)\])?';
             if (preg_match('/^' . $attributePattern . $predicatePattern . '$/', $segment, $matches) !== 1) {
-                throw new \Exception("Unable to parse path segment [$segment]");
+                throw new RuntimeException("Unable to parse path segment [$segment]");
             }
 
             if (! array_key_exists('attribute_name', $matches)) {
-                throw new \Exception("Unable to find attribute_name in path segment [$segment]");
+                throw new RuntimeException("Unable to find attribute_name in path segment [$segment]");
             }
 
             return $matches;
