@@ -21,6 +21,7 @@ class PathQuery
         foreach ($this->segments() as $segment) {
             $items = $items
                 ->map(fn ($item) => $item->{$segment['attribute_name']} ?? null)
+                ->filter()
                 ->flatten()
                 ->when(
                     isset($segment['expression']),

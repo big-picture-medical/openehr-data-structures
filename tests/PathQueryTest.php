@@ -74,6 +74,10 @@ class PathQueryTest extends TestCase
         $result = (new PathQuery('missing[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value'))
             ->findList($composition);
         $this->assertSame([], $result);
+
+        $result = (new PathQuery('test'))
+            ->findList($composition);
+        $this->assertSame([], $result);
     }
 
     private function makeComposition(): Composition
