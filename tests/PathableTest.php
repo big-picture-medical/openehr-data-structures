@@ -12,6 +12,7 @@ use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\CodePhrase;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvText;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 class PathableTest extends TestCase
 {
@@ -19,9 +20,19 @@ class PathableTest extends TestCase
     {
         $composition = $this->makeComposition();
 
-        $result = $composition->itemAtPath('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value');
+        $result = $composition->itemAtPath('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0004]/value/value');
 
-        $this->assertSame('Test value 1', $result);
+        $this->assertSame('Test unique value', $result);
+    }
+
+    public function test_it_throws_when_find_has_multiple_results()
+    {
+        $composition = $this->makeComposition();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Found multiple items at path. Found 4, expected 1.');
+
+        $composition->itemAtPath('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0003]/value/value');
     }
 
     public function test_it_finds_items_at_path()
@@ -72,6 +83,11 @@ class PathableTest extends TestCase
                                         archetype_node_id: 'at0003',
                                         name: new DvText(value: 'Test element'),
                                         value: new DvText(value: 'Test value 2')
+                                    ),
+                                    new Element(
+                                        archetype_node_id: 'at0004',
+                                        name: new DvText(value: 'Test element'),
+                                        value: new DvText(value: 'Test unique value')
                                     ),
                                 ]
                             ),

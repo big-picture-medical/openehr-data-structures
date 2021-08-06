@@ -4,6 +4,7 @@ namespace BigPictureMedical\OpenEhr;
 
 use BigPictureMedical\OpenEhr\Rm\Common\Archetyped\Pathable;
 use Illuminate\Support\Collection;
+use RuntimeException;
 
 class PathQuery
 {
@@ -11,7 +12,13 @@ class PathQuery
 
     public function find(Pathable $root): mixed
     {
-        return $this->findList($root)[0] ?? null;
+        $items = $this->findList($root);
+
+        if (count($items) > 1) {
+            throw new RuntimeException('Found multiple items at path. Found '.count($items).', expected 1.');
+        }
+
+        return $items[0] ?? null;
     }
 
     public function findList(Pathable $root): array
