@@ -46,11 +46,11 @@ class PathQuery
             $attributePattern = '(?<attribute_name>\w+)';
             $predicatePattern = '(?<predicate>\[(?<expression>[\w.-]+)\])?';
             if (preg_match('/^' . $attributePattern . $predicatePattern . '$/', $segment, $matches) !== 1) {
-                throw new \Exception("Unable to parse path segment [$segment]");
+                throw new RuntimeException("Unable to parse path segment [$segment]");
             }
 
             if (! array_key_exists('attribute_name', $matches)) {
-                throw new \Exception("Unable to find attribute_name in path segment [$segment]");
+                throw new RuntimeException("Unable to find attribute_name in path segment [$segment]");
             }
 
             return $matches;
