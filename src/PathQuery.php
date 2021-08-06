@@ -34,6 +34,16 @@ class PathQuery
         return $items->toArray();
     }
 
+    public function exists(Pathable $root): bool
+    {
+        return count($this->findList($root)) > 0;
+    }
+
+    public function unique(Pathable $root): bool
+    {
+        return count($this->findList($root)) === 1;
+    }
+
     private function segments(): Collection
     {
         return collect(explode('/', $this->query))->map(function ($segment) {
