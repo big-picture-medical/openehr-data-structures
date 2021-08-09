@@ -9,6 +9,8 @@ use BigPictureMedical\OpenEhr\Rm\Composition\Content\Entry\Evaluation;
 use BigPictureMedical\OpenEhr\Rm\DataStructures\ItemStructure\ItemTree;
 use BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Cluster;
 use BigPictureMedical\OpenEhr\Rm\DataStructures\Representation\Element;
+use BigPictureMedical\OpenEhr\Rm\DataTypes\Basic\DvBoolean;
+use BigPictureMedical\OpenEhr\Rm\DataTypes\Quantity\DvCount;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\CodePhrase;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvCodedText;
 use BigPictureMedical\OpenEhr\Rm\DataTypes\Text\DvText;
@@ -92,6 +94,19 @@ class PathQueryTest extends TestCase
         $this->assertSame([], $result);
     }
 
+    public function test_it_doesnt_filter_zero_and_false()
+    {
+        $composition = $this->makeComposition();
+
+        $result = (new PathQuery('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0005]/value/value'))
+            ->find($composition);
+        $this->assertSame(false, $result);
+
+        $result = (new PathQuery('content[test-EVALUATION.test.v0]/data/items[at0002]/items[at0006]/value/magnitude'))
+            ->find($composition);
+        $this->assertSame(0, $result);
+    }
+
     public function test_it_finds_whether_a_path_exists()
     {
         $composition = $this->makeComposition();
@@ -157,6 +172,16 @@ class PathQueryTest extends TestCase
                                         archetype_node_id: 'at0004',
                                         name: new DvText(value: 'Test element'),
                                         value: new DvText(value: 'Test unique value')
+                                    ),
+                                    new Element(
+                                        archetype_node_id: 'at0005',
+                                        name: new DvText(value: 'False'),
+                                        value: new DvBoolean(value: false),
+                                    ),
+                                    new Element(
+                                        archetype_node_id: 'at0006',
+                                        name: new DvText(value: 'Falsey'),
+                                        value: new DvCount(magnitude: 0),
                                     ),
                                 ]
                             ),
