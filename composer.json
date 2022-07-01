@@ -2,7 +2,7 @@
     "name": "big-picture-medical/openehr-data-structures",
     "require": {
         "spatie/data-transfer-object": "^3.5",
-        "symfony/finder": "^5.2",
+        "symfony/finder": "^6.0",
         "illuminate/support": "^8.21 || ^9.0"
     },
     "autoload": {
