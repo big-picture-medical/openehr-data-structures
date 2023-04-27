@@ -3,7 +3,7 @@
     "require": {
         "spatie/data-transfer-object": "^3.5",
         "symfony/finder": "^6.0",
-        "illuminate/support": "^8.21 || ^9.0"
+        "illuminate/support": "^8.21 || ^10.9"
     },
     "autoload": {
         "psr-4": {
@@ -16,6 +16,8 @@
         }
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest"
+        ,
         "phpstan/phpstan": "^0.12.57",
         "phpunit/phpunit": "^9"
     },
